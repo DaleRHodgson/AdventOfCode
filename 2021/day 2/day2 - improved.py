@@ -3,10 +3,10 @@ with open("day2_input.txt") as d:
 
    
 class Submarine:
-    def __init__(self, horizontal_position, depth, aim):
-        self.horizontal_position = horizontal_position
-        self.depth = depth
-        self.aim = aim
+    def __init__(self, _horizontal_position, _depth, _aim):
+        self.horizontal_position = _horizontal_position
+        self.depth = _depth
+        self.aim = _aim
 
     def move(self,command):
         instruction, amount = command.split(' ')
