@@ -3,7 +3,9 @@ with open("day6_input.txt") as d:
 
 test_data = [3,4,3,1,2]
 
+#basic func for direct way of increasing fish
 def iter_day(fish_states):
+    #uses input like test_data directly
     #countdown all fish ages
     for i in range(len(fish_states)):
         fish_states[i] -= 1
@@ -14,6 +16,8 @@ def iter_day(fish_states):
             fish_states[i] = 6
     return(fish_states)
 
+
+#cleverer method that avoids exponentially large lists
 #key = age, value=number of fish of that age
 fish_data = { 0:0,
               1:0,
