@@ -12,61 +12,78 @@ from numpy import loadtxt
                                                 ## Read in file(s)
                                                 ################################################
 
-inputFile = "AoC_2022Dec01_input.txt"
-exampleFile = "AoC_2022Dec01_example.txt"
+inputFile = "AoC_2022Dec02_input.txt"
+exampleFile = "AoC_2022Dec02_example.txt"
 
-with open(inputFile) as d:
-#with open(exampleFile) as d:
+#with open(inputFile) as d:
+with open(exampleFile) as d:
     data_raw = [line.strip("\n") for line in d.readlines()]
-    # list of calories carried by elves
+    # strategy guide
 
                                                 ################################################
                                                 ## Process raw into cleaned lis of lists of ints
                                                 ################################################
 
-# make every sequence of entries terminate with ''
-data_raw.append('')
+#print(data_raw)
 
-# convert strings to int, replace '' with 0
-data_ints = []
-for val in data_raw:
-    if val != '':
-        data_ints.append(int(val))
-    elif val == '':
-        data_ints.append(0)
+data_clean = []
 
-# identify seperation between entries
-indexes_of_gaps = [0]
-for index in range(len(data_ints)):
-    if data_ints[index] == 0:
-        indexes_of_gaps.append(index+1)
+for entry in data_raw:
+    data_clean.append(entry.split(' '))
 
-# create clean list of lists
-input_clean = []
-num_of_elves = len(indexes_of_gaps)
+#print(data_clean)
 
-for i in range(num_of_elves-1):
-    elf_start = indexes_of_gaps[i]
-    elf_end = indexes_of_gaps[i+1]-1
-    input_clean.append(data_ints[elf_start:elf_end])
+opponent_key = {"A": "Rock", "B": "Paper", "C": "Scissors"}
+your_key = {"X": "Rock", "Y": "Paper", "Z": "Scissors"}
+
+points_key = {"Rock": 1, "Paper": 2, "Scissors": 3}
+
+results_key = {"Win": 6, "Draw": 3, "Lose": 0}
 
 ################################################################################################
 ## Part 1 solution
 ################################################################################################
 
-sums_of_cals = []
-for elf in input_clean:
-    sums_of_cals.append(sum(elf))
+def youWin(opponents_throw, your_throw):
+    if (opponents_throw == "Rock" and your_throw == "Paper") or (opponents_throw == "Paper" and your_throw == "Scissors") or (opponents_throw == "Scissors" and your_throw == "Rock"):
+        return True
 
-print("\n#### Part 1")
-print(f"Elf {sums_of_cals.index(max(sums_of_cals))+1} is carrying the most calories with: {max(sums_of_cals)}")
+    else:
+        return False
+
+def playRPS(strategy):
+    # accepts strategy list e.g. (['A', 'Y'])
+
+    opponents_throw = opponent_key[strategy[0]]
+    your_throw = your_key[strategy[1]]
+
+    #print(opponents_throw, your_throw)
+
+    points = points_key[your_throw]
+
+    if youWin(opponents_throw, your_throw):
+        #result = "Win"
+        points += 6
+    if youWin(your_throw, opponents_throw):
+        #result = "Lose"
+        points += 0
+    if opponents_throw == your_throw:
+        #result = "Draw"
+        points += 3
+
+    #points += results_key[result]
+
+    return points
+
+total_score = 0
+
+for entry in data_clean:
+    total_score += playRPS(entry)
+    #print(playRPS(entry))
+
+print(f"\nTotal score: {total_score}")
 
 ################################################################################################
 ## Part 2 solution
 ################################################################################################
 
-sums_of_cals.sort()
-sum_top_three = sum(sums_of_cals[-3:])
-
-print("\n#### Part 2")
-print(f"The top three elves are carrying {sum_top_three} calories in total.")
