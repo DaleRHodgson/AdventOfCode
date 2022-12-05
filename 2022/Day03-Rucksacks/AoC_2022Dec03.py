@@ -16,8 +16,8 @@ import string
 inputFile = "AoC_2022Dec03_input.txt"
 exampleFile = "AoC_2022Dec03_example.txt"
 
-#with open(inputFile) as d:
-with open(exampleFile) as d:
+with open(inputFile) as d:
+#with open(exampleFile) as d:
     data_raw = [line.strip("\n") for line in d.readlines()]
     # rucksacks list
 
@@ -90,8 +90,10 @@ def get_shared_item(elves):
 
 priorities_sum = 0
 
-for i in range(len(data_raw)-2):
+for i in range(0,len(data_raw)-2,3):
 
     shared_item = get_shared_item([data_raw[i], data_raw[i+1], data_raw[i+2]])
 
-    print(f"{shared_item}\n")
+    priorities_sum += get_priority(shared_item)
+
+print(f"#### Part 2\nSum of priorities = {priorities_sum}\n")
