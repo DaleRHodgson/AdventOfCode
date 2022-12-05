@@ -16,8 +16,8 @@ import string
 inputFile = "AoC_2022Dec04_input.txt"
 exampleFile = "AoC_2022Dec04_example.txt"
 
-with open(inputFile) as d:
-#with open(exampleFile) as d:
+#with open(inputFile) as d:
+with open(exampleFile) as d:
     data_raw = [line.strip("\n") for line in d.readlines()]
     # rucksacks list
 
@@ -25,8 +25,20 @@ with open(inputFile) as d:
                                                 ## Process raw into cleaned list
                                                 ################################################
 
+#print(data_raw)
+
 data_clean = []
 
+for entry in data_raw:
+
+    pair_str = entry.split(',')
+    
+    pair_minmax_str = [[int(pair_str[0].split('-')[0]), int(pair_str[0].split('-')[1])], [int(pair_str[1].split('-')[0]), int(pair_str[1].split('-')[1])]]
+        
+    data_clean.append(pair_minmax_str)
+    
+for i in data_clean:
+    print(i)
 
 ################################################################################################
 ## Part 1 solution
